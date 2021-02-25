@@ -1,23 +1,14 @@
 plugins {
-	id 'org.springframework.boot' version '2.2.4.RELEASE'
-	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	id 'org.springframework.boot' version '2.4.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
-	id 'maven'
+	id 'maven-publish'
 	id 'org.springframework.boot.experimental.thin-launcher' version '1.0.27.BUILD-SNAPSHOT'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
-
-// Shouldn't need this...
-jar {
-	manifest {
-		attributes(
-			'Start-Class': 'com.example.LauncherApplication'
-		)
-	}
-}
 
 repositories {
 	mavenLocal()
@@ -27,7 +18,7 @@ repositories {
 }
 
 ext {
-	set('springCloudVersion', "Hoxton.SR1")
+	set('springCloudVersion', "2020.0.1")
 }
 
 configurations { implementation.exclude module: 'spring-boot-starter-tomcat' }
@@ -37,9 +28,7 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-web')
 	implementation('org.springframework.boot:spring-boot-starter-jetty')
 	implementation('org.springframework.boot:spring-boot-starter-actuator')
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-	}
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 dependencyManagement {
 	imports {
@@ -49,4 +38,10 @@ dependencyManagement {
 
 test {
 	useJUnitPlatform()
+}
+
+publishing {
+	publications {
+		maven(MavenPublication)
+	}
 }
